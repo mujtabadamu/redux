@@ -13,3 +13,31 @@ export const addToCart = (data) => {
     payload: data,
   };
 };
+
+export const IncreaseQty = (data) => {
+  return {
+    type: CARTS.INCREASE,
+    payload: data,
+  };
+};
+
+export const DecreaseQty = (data) => {
+  return {
+    type: CARTS.DECREASE,
+    payload: data,
+  };
+};
+
+export const RemoveToCart = (data) => {
+  return {
+    type: CARTS.REMOVE_TO_CART,
+    payload: data,
+  };
+};
+
+
+export const Cancel = () => {
+  return {
+    type: CARTS.CANCEL,
+  };
+};

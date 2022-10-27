@@ -1,5 +1,6 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
+import { Cancel, DecreaseQty, IncreaseQty, RemoveToCart } from "../redux/actions";
 import { AsideCard, ListIcon } from "../styled";
 import EmptyState from "./ExptyState";
 
@@ -35,10 +36,10 @@ function CartItems({ products }) {
                         <td
                           onClick={() => {
                             if (item.quantity > 1) {
-                              dispatch({ type: "DECREASE", payload: item });
+                              dispatch(DecreaseQty(item));
                               
                             } else {
-                              dispatch({ type: "REMOVE", payload: item }); 
+                              dispatch(RemoveToCart(item)); 
                             }
                           }}
                         >
@@ -47,7 +48,7 @@ function CartItems({ products }) {
                         <td>{item.quantity}</td>
                         <td
                           onClick={() =>
-                            dispatch({ type: "INCREASE", payload: item })
+                            dispatch(IncreaseQty(item))
                           }
                         >
                           +
@@ -72,7 +73,7 @@ function CartItems({ products }) {
             <button className="hold">Hold</button>
             <button
               className="cancel"
-              onClick={() => dispatch({ type: "CANCEL" })}
+              onClick={() => dispatch(Cancel())}
             >
               Cancel
             </button>
