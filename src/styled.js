@@ -7,7 +7,7 @@ export const AsideCard = styled.div`
   align-items: flex-end;
   border-bottom: 1px solid lightgray;
   /* padding: 8px; */
-  height: 70px;
+  /* height: 70px; */
   padding: 10px;
   position: relative;
 

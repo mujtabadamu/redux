@@ -41,3 +41,10 @@ export const Cancel = () => {
     type: CARTS.CANCEL,
   };
 };
+
+export const SearchItem = (data) => {
+  return {
+    type: CARTS.SEARCH,
+    payload:data
+  };
+};

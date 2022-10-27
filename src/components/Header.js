@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 import { connect, useDispatch } from "react-redux";
-import { setSideBar } from "../redux/actions";
+import { SearchItem, setSideBar } from "../redux/actions";
 
 function Header({ items, sidebar }) {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const [show, setShow] = useState(false);
+
+  useEffect(()=>{
+    dispatch(SearchItem(search))
+  }, [search, dispatch])
+
 
   return (
     <div className="header">
@@ -15,7 +22,12 @@ function Header({ items, sidebar }) {
         <div>
           <h2>Food Items</h2>
         </div>
-        <div className="search">{<FaSearch />}</div>
+        <div className="search" onMouseEnter={()=>setShow(true)}>
+          {show ?
+          <input onMouseLeave={()=> setShow(false)} type='search' value={search} onChange={e =>setSearch(e.target.value)} />
+          :<FaSearch  />
+       }
+        </div>
       </div>
       <div className="cart_header">
         Cart <span className="total_icon">{items.length}</span>

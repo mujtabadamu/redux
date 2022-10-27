@@ -33,6 +33,7 @@ const foodReducers = (cart = [], action) => {
     });
     return tempcart;
   }
+
   return cart;
 };
 

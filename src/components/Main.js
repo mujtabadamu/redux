@@ -1,14 +1,24 @@
-import React from "react";
-import {  useDispatch } from "react-redux";
+import React, { useMemo, useState } from "react";
+import {  connect, useDispatch } from "react-redux";
 import { Data } from "../data/Data";
 import { addToCart } from "../redux/actions";
 import { ListIcon } from "../styled";
 
-function Main() {
+function Main({filteredItems}) {
   const dispatch = useDispatch();
+  // eslint-disable-next-line
+  const [items, setItems] = useState(Data);
+
+
+let search = useMemo(() => {
+  return items.filter(item => {
+    return item.name.toLowerCase().includes(filteredItems.toLowerCase())
+  })
+}, [items, filteredItems])
+
   return (
     <div className="main">
-      {Data?.map((item) => {
+      {search?.map((item) => {
         return (
           <div
             key={item.id}
@@ -29,4 +39,10 @@ function Main() {
   );
 } 
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    filteredItems: state.filteredItems
+  }
+}
+
+export default connect(mapStateToProps, null)(Main);
