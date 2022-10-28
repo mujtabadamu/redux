@@ -1,12 +1,11 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Cancel, DecreaseQty, IncreaseQty, RemoveToCart } from "../redux/actions";
 import { AsideCard, ListIcon } from "../styled";
 import EmptyState from "./ExptyState";
 
-function CartItems({ products }) {
-  const dispatch = useDispatch();
+function CartItems({ products, Remove, Increase, Decrease, Cancel }) {
   const total = products?.reduce((acc, currVal)=> acc + currVal.price * currVal.quantity, 0);
 
   return (
@@ -33,10 +32,10 @@ function CartItems({ products }) {
                         <td
                           onClick={() => {
                             if (item.quantity > 1) {
-                              dispatch(DecreaseQty(item));
+                              Decrease(item);
                               
                             } else {
-                              dispatch(RemoveToCart(item)); 
+                              Remove(item); 
                             }
                           }}
                         >
@@ -45,7 +44,7 @@ function CartItems({ products }) {
                         <td>{item.quantity}</td>
                         <td
                           onClick={() =>
-                            dispatch(IncreaseQty(item))
+                            Increase(item)
                           }
                         >
                           +
@@ -55,9 +54,9 @@ function CartItems({ products }) {
                   </table>
                 </div>
                 <div className="price">
-                  <div onClick={()=> dispatch(RemoveToCart(item))} style={{color:"red"}}><FaTimes /></div>
+                  <div onClick={()=> Remove(item)} style={{color:"red", cursor:'pointer'} }><FaTimes /></div>
                    ${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2) }
-                  </div>
+                </div>
               </AsideCard>
             );
           })}
@@ -71,7 +70,7 @@ function CartItems({ products }) {
             <button className="hold">Hold</button>
             <button
               className="cancel"
-              onClick={() => dispatch(Cancel())}
+              onClick={() => Cancel()}
             >
               Cancel
             </button>
@@ -87,4 +86,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CartItems);
+const mapDispatchToProps = (dispatch) => {
+  return{
+    Remove:(item)=> dispatch(RemoveToCart(item)),
+    Increase:(item)=> dispatch(IncreaseQty(item)),
+    Decrease:(item)=> dispatch(DecreaseQty(item)),
+    Cancel:()=>dispatch(Cancel()),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CartItems);

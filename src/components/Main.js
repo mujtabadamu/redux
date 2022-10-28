@@ -1,11 +1,10 @@
 import React, { useMemo, useState } from "react";
-import {  connect, useDispatch } from "react-redux";
+import {  connect } from "react-redux";
 import { Data } from "../data/Data";
 import { addToCart } from "../redux/actions";
 import { ListIcon } from "../styled";
 
-function Main({filteredItems}) {
-  const dispatch = useDispatch();
+function Main({filteredItems, addToCart}) {
   // eslint-disable-next-line
   const [items, setItems] = useState(Data);
 
@@ -24,7 +23,7 @@ let search = useMemo(() => {
             key={item.id}
             className="items"
             onClick={() => {
-              dispatch(addToCart(item));
+              addToCart(item);
               item.quantity = 1
             }}>
             <img src={item.images} width="100%" alt={item.name} />
@@ -44,5 +43,10 @@ const mapStateToProps = (state) => {
     filteredItems: state.filteredItems
   }
 }
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    addToCart: (item) => dispatch(addToCart(item)) 
+  }
+}
 
-export default connect(mapStateToProps, null)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

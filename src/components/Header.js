@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { SearchItem, setSideBar } from "../redux/actions";
 
-function Header({ items, sidebar }) {
-  const dispatch = useDispatch();
+function Header({ items, sidebar, Search,ShowSide }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
 
   useEffect(()=>{
-    dispatch(SearchItem(search))
-  }, [search, dispatch])
+    Search(search)
+  }, [search, Search])
 
 
   return (
     <div className="header">
       <div className="head_info">
-        <div onClick={() => dispatch(setSideBar(!sidebar.showMenu))}>
+        <div onClick={() => ShowSide(!sidebar.showMenu)}>
           {sidebar.showMenu ? <FaTimes /> : <FaBars />}
         </div>
         <div>
@@ -43,4 +42,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    Search: (data) => dispatch(SearchItem(data)),
+    ShowSide:(data) => dispatch(setSideBar(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
