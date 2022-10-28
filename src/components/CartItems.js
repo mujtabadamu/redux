@@ -1,4 +1,5 @@
 import React from "react";
+import { FaTimes } from "react-icons/fa";
 import { connect, useDispatch } from "react-redux";
 import { Cancel, DecreaseQty, IncreaseQty, RemoveToCart } from "../redux/actions";
 import { AsideCard, ListIcon } from "../styled";
@@ -6,11 +7,7 @@ import EmptyState from "./ExptyState";
 
 function CartItems({ products }) {
   const dispatch = useDispatch();
-
-  const addTotalFn = (acc, currentVal) => {
-    return acc + currentVal.price * currentVal.quantity;
-  };
-  const total = products?.reduce(addTotalFn, 0);
+  const total = products?.reduce((acc, currVal)=> acc + currVal.price * currVal.quantity, 0);
 
   return (
     <div>
@@ -58,6 +55,7 @@ function CartItems({ products }) {
                   </table>
                 </div>
                 <div className="price">
+                  <div onClick={()=> dispatch(RemoveToCart(item))} style={{color:"red"}}><FaTimes /></div>
                    ${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2) }
                   </div>
               </AsideCard>

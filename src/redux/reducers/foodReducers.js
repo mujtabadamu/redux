@@ -3,7 +3,7 @@ import { CARTS } from "../constants";
 const foodReducers = (cart = [], action) => {
   if (action.type === CARTS.ADD_TO_CART) {
     let tempcart = cart.filter((item) => item.id === action.payload.id);
-    if (tempcart < 1) {
+    if (tempcart.length < 1) {
       return [...cart, action.payload];
     } else {
       return cart;
