@@ -6,7 +6,6 @@ import Container from "./components/Container";
 function App() {
   return (
     <div className="App">
-      <Header />
       <Container />
     </div>
   );

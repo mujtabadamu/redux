@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import {  connect } from "react-redux";
 import { Data } from "../data/Data";
 import { addToCart } from "../redux/actions";
-import { ListIcon } from "../styled";
+import { ListIcon, MainBox } from "../styled";
 
 function Main({filteredItems, addToCart}) {
   // eslint-disable-next-line
@@ -16,7 +16,7 @@ let search = useMemo(() => {
 }, [items, filteredItems])
 
   return (
-    <div className="main">
+    <MainBox>
       {search?.map((item) => {
         return (
           <div
@@ -26,15 +26,18 @@ let search = useMemo(() => {
               addToCart(item);
               item.quantity = 1
             }}>
-            <img src={item.images} width="100%" alt={item.name} />
-            <p className="item_name">
-              <ListIcon /> {item.name}
-            </p>
-            <b>$ {item.price}</b>
+              <div>
+                <img src={item.images} width="100%" alt={item.name} />
+              </div>
+              <div>
+                <p className="item_name"> <ListIcon /> {item.name} </p>
+                <p className="price">$ {item.price}</p>
+              </div>
+           
           </div>
         );
       })}
-    </div>
+    </MainBox>
   );
 } 
 

@@ -2,14 +2,14 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
 import { Cancel, DecreaseQty, IncreaseQty, RemoveToCart } from "../redux/actions";
-import { AsideCard, ListIcon } from "../styled";
+import { AsideCard, CartItemBox, ListIcon } from "../styled";
 import EmptyState from "./ExptyState";
 
 function CartItems({ products, Remove, Increase, Decrease, Cancel }) {
   const total = products?.reduce((acc, currVal)=> acc + currVal.price * currVal.quantity, 0);
 
   return (
-    <div>
+    <CartItemBox>
       {products?.length === 0 ? (
         <div>
           <EmptyState />
@@ -55,18 +55,19 @@ function CartItems({ products, Remove, Increase, Decrease, Cancel }) {
                 </div>
                 <div className="price">
                   <div onClick={()=> Remove(item)} style={{color:"red", cursor:'pointer'} }><FaTimes /></div>
-                   ${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2) }
+                 <strong>${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2) }</strong>
                 </div>
               </AsideCard>
             );
           })}
           <div className="total">
             <p>Item Total</p>
-            <p>${(total).toFixed(2)}</p>
+            <p><strong>${(total).toFixed(2)}</strong></p>
           </div>
 
           <div className="checkout">
             <p>Checkout</p>
+            <div>
             <button className="hold">Hold</button>
             <button
               className="cancel"
@@ -74,10 +75,12 @@ function CartItems({ products, Remove, Increase, Decrease, Cancel }) {
             >
               Cancel
             </button>
+            </div>
+           
           </div>
         </div>
       )}
-    </div>
+    </CartItemBox>
   );
 }
 const mapStateToProps = (state) => {

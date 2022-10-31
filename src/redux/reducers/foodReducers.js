@@ -22,6 +22,7 @@ const foodReducers = (cart = [], action) => {
       }
       return item;
     });
+    
     return tempcart;
   }
   if (action.type === CARTS.DECREASE) {

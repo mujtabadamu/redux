@@ -3,10 +3,12 @@ import { NavLink } from "react-router-dom";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { BsStar } from "react-icons/bs";
 import { SlSettings } from "react-icons/sl";
-function SideBar() {
+import { SideBarBox } from "../styled";
+import { connect } from "react-redux";
+function SideBar({menu}) {
   return (
-    <div className="list_menu">
-      <ul>
+    <SideBarBox>
+      <ul style={{display: menu.showMenu ? 'block' : 'none'}}>
         <li>
           <NavLink
             to={"/"}
@@ -48,8 +50,14 @@ function SideBar() {
           </NavLink>
         </li>
       </ul>
-    </div>
+    </SideBarBox>
   );
 }
 
-export default SideBar;
+const mapStateToProps = (state) => {
+  return {
+    menu: state.menu,
+  };
+};
+
+export default connect(mapStateToProps, null)(SideBar);

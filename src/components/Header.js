@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
 import { SearchItem, setSideBar } from "../redux/actions";
+import { HeaderBox } from "../styled";
 
-function Header({ items, sidebar, Search,ShowSide }) {
+function Header({  sidebar, Search,ShowSide }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
 
@@ -13,10 +14,10 @@ function Header({ items, sidebar, Search,ShowSide }) {
 
 
   return (
-    <div className="header">
-      <div className="head_info">
-        <div onClick={() => ShowSide(!sidebar.showMenu)}>
-          {sidebar.showMenu ? <FaTimes /> : <FaBars />}
+    <HeaderBox>
+     
+        <div className="menuIcon" onClick={() => ShowSide(!sidebar.showMenu)}>
+          {sidebar.showMenu ? <FaTimes size={18} /> : <FaBars size={18} />}
         </div>
         <div>
           <h2>Food Items</h2>
@@ -27,17 +28,14 @@ function Header({ items, sidebar, Search,ShowSide }) {
           :<FaSearch  />
        }
         </div>
-      </div>
-      <div className="cart_header">
-        Cart <span className="total_icon">{items.length}</span>
-      </div>
-    </div>
+     
+    
+    </HeaderBox>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    items: state.foodItems,
     sidebar: state.menu,
   };
 };
